@@ -23,6 +23,8 @@ app/
   page.tsx         assembles the sections, JSON-LD
   globals.css      colour tokens, type, buttons, shared utilities
   icon.svg         favicon
+  robots.ts        robots.txt
+  sitemap.ts       sitemap.xml
 components/
   SmoothScroll     Lenis + GSAP ticker; scroll lock for menu and lightbox
   Lightbox         full-screen photo viewer (keyboard and swipe)
@@ -57,10 +59,29 @@ A workflow in `.github/workflows/deploy.yml` builds and publishes the site on ev
 
 1. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**
    (this replaces the old "Deploy from a branch" setting).
-2. Push to `main`. The site goes live at https://venkateshthammisetti.github.io/tales-by-phani/.
+2. Push to `main`. The site goes live at https://www.talesbyphani.in.
 
-For a custom domain: add it under Settings → Pages, remove the `BASE_PATH` env line in the workflow, and update
-`SITE_URL` in `lib/site.ts`.
+### Custom domain (www.talesbyphani.in, registered at GoDaddy)
+
+The site is built for the root of the domain (`SITE_URL` in `lib/site.ts`, no `BASE_PATH` in the workflow).
+
+.IN domains need KYC verification at GoDaddy before DNS changes are allowed (the yellow "Validate" banner).
+
+DNS records in GoDaddy (**My Products → talesbyphani.in → DNS**):
+
+| Type  | Name | Value                           |
+|-------|------|---------------------------------|
+| CNAME | www  | `venkateshthammisetti.github.io` |
+| A     | @    | `185.199.108.153`               |
+| A     | @    | `185.199.109.153`               |
+| A     | @    | `185.199.110.153`               |
+| A     | @    | `185.199.111.153`               |
+
+Delete GoDaddy's default `A @ Parked` record and any existing `CNAME www` first. The four A records make
+`talesbyphani.in` (no www) redirect to `www.talesbyphani.in`.
+
+Then in GitHub: **Settings → Pages → Custom domain** → `www.talesbyphani.in` → Save. When the DNS check passes,
+tick **Enforce HTTPS** (the certificate can take up to an hour). With the Actions workflow no `CNAME` file is needed.
 
 ## Before going live
 

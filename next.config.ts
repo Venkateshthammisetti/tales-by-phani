@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// On GitHub Pages the site lives under /tales-by-phani. The deploy workflow sets BASE_PATH;
-// locally and on a custom domain it is empty.
+// Served from the root of www.talesbyphani.in, so BASE_PATH is normally empty. Set it only to serve
+// from a sub-path such as https://<user>.github.io/tales-by-phani/.
 const basePath = process.env.BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {

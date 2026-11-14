@@ -24,10 +24,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # The site is served from /<repo-name>/ on GitHub Pages. Remove BASE_PATH if you move to a custom domain.
+      # Served from the root of the custom domain (www.talesbyphani.in), so no BASE_PATH.
+      # To go back to https://<user>.github.io/<repo>/, add `env: BASE_PATH: /${{ github.event.repository.name }}` here.
       - run: npm run build
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

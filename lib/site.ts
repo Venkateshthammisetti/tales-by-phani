@@ -1,6 +1,6 @@
 /** Site-wide settings. Update these before going live. */
 
-export const SITE_URL = "https://venkateshthammisetti.github.io/tales-by-phani/";
+export const SITE_URL = "https://www.talesbyphani.in/";
 
 /** Phani's WhatsApp number, country code first, digits only. If it's ever cleared, enquiries fall back to email. */
 export const WHATSAPP = "919014247710";
