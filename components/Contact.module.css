@@ -53,6 +53,16 @@
 .reach a:hover {
   border-color: var(--rose);
 }
+.icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: var(--rose);
+}
+.btnIcon {
+  width: 18px;
+  height: 18px;
+}
 .reach small {
   display: block;
   color: var(--sage);

@@ -11,7 +11,7 @@ import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { EMAIL, SITE_URL } from "@/lib/site";
+import { EMAIL, SITE_URL, WHATSAPP } from "@/lib/site";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -20,6 +20,7 @@ const jsonLd = {
   description: "Wedding, couple and concert photography from Hyderabad.",
   url: SITE_URL,
   email: EMAIL,
+  telephone: `+${WHATSAPP}`,
   image: `${SITE_URL}img/forehead-fog.webp`,
   address: { "@type": "PostalAddress", addressLocality: "Hyderabad", addressRegion: "Telangana", addressCountry: "IN" },
   areaServed: "IN",

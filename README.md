@@ -64,8 +64,8 @@ For a custom domain: add it under Settings → Pages, remove the `BASE_PATH` env
 
 ## Before going live
 
-- [ ] Set Phani's WhatsApp number: `WHATSAPP` in `lib/site.ts` (country code first, digits only).
-      Until it's set, the enquiry form sends by email instead of WhatsApp.
+- [x] Phani's WhatsApp number (+91 90142 47710) is set in `lib/site.ts` (`WHATSAPP` and `PHONE_DISPLAY`).
+      It powers the enquiry form, the contact links, the mobile bar, the floating desktop button and the footer.
 - [ ] Confirm the contact email (`EMAIL` in `lib/site.ts`)
 - [ ] Confirm rights for the "AR / Art of Revealing" watermarked Pavan & Sanjana photos, or swap in clean exports
 - [ ] Add the BRIDE / WEDDING photos as web-size exports (originals were too large to pull)

@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { gsap, useGSAP, prefersMotion } from "@/lib/gsap";
-import { EMAIL, WHATSAPP, whatsAppOn } from "@/lib/site";
+import { EMAIL, PHONE_DISPLAY, WHATSAPP, whatsAppOn, waLink } from "@/lib/site";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 import { small } from "@/lib/photos";
 import { RevealHeading } from "./RevealHeading";
 import styles from "./Contact.module.css";
@@ -63,6 +64,23 @@ export function Contact() {
             Phani replies personally.
           </p>
           <div className={styles.reach}>
+            {whatsAppOn && (
+              <>
+                <a href={waLink()} target="_blank" rel="noopener">
+                  <WhatsAppIcon className={styles.icon} />
+                  <span>
+                    <small>WhatsApp</small>
+                    {PHONE_DISPLAY}
+                  </span>
+                </a>
+                <a href={`tel:+${WHATSAPP}`}>
+                  <span>
+                    <small>Call</small>
+                    {PHONE_DISPLAY}
+                  </span>
+                </a>
+              </>
+            )}
             <a href={`mailto:${EMAIL}`}>
               <span>
                 <small>Email</small>
@@ -118,6 +136,7 @@ export function Contact() {
                 }
               }}
             >
+              {whatsAppOn && <WhatsAppIcon className={styles.btnIcon} />}
               {whatsAppOn ? "Send on WhatsApp" : "Send by email"}
             </a>
           </div>

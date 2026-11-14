@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { NAV_LINKS, asset } from "@/lib/site";
+import { NAV_LINKS, PHONE_DISPLAY, asset, waLink, whatsAppOn } from "@/lib/site";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 import { useScrollLock } from "./SmoothScroll";
 import styles from "./Nav.module.css";
 
@@ -100,8 +101,30 @@ export function Nav() {
 
       <div className={`${styles.bar} ${bar && !menu ? styles.barOn : ""}`}>
         <a href="#contact">Check your date</a>
-        <a href="#work">Portfolio</a>
+        {whatsAppOn ? (
+          <a href={waLink()} target="_blank" rel="noopener" className={styles.barWa}>
+            <WhatsAppIcon className={styles.waIcon} />
+            WhatsApp
+          </a>
+        ) : (
+          <a href="#work">Portfolio</a>
+        )}
       </div>
+
+      {/* Desktop: a quiet floating chat button once the visitor is past the hero. */}
+      {whatsAppOn && (
+        <a
+          href={waLink()}
+          target="_blank"
+          rel="noopener"
+          className={`${styles.waFloat} ${bar && !menu ? styles.waFloatOn : ""}`}
+          aria-label={`Chat with Phani on WhatsApp, ${PHONE_DISPLAY}`}
+          data-magnetic
+        >
+          <WhatsAppIcon className={styles.waIcon} />
+          <span>Chat on WhatsApp</span>
+        </a>
+      )}
     </>
   );
 }
