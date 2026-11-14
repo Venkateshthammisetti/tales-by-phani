@@ -10,6 +10,7 @@ import { Work } from "@/components/Work";
 import { Stage } from "@/components/Stage";
 import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
+import { Testimonials } from "@/components/Testimonials";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { EMAIL, SITE_URL, WHATSAPP } from "@/lib/site";
@@ -46,6 +47,7 @@ export default function Home() {
           <Stage />
           <Services />
           <Process />
+          <Testimonials />
           <Contact />
         </main>
         <Footer />

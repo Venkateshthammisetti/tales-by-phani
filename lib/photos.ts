@@ -153,3 +153,20 @@ export const SERVICES: { title: string; text: string; img: PhotoId }[] = [
   { title: "Engagements", text: "The ring, the families, the nervous first dance.", img: "eng-embrace" },
   { title: "Concerts & events", text: "Live coverage for artists, organisers and brands.", img: "stage-crowd" },
 ];
+
+/* ---------- hero slideshow ----------
+ * Darker photos with the subject off to the right, so the headline (bottom left) stays readable.
+ * Each slide has two files in public/img/hero: `<id>-w.webp` (2000×1200, landscape screens)
+ * and `<id>-t.webp` (900×1350, phones). The first slide loads immediately; the rest after the intro.
+ */
+export type HeroSlide = { id: string; alt: string };
+
+export const HERO: HeroSlide[] = [
+  { id: "bride-throne", alt: "A bride in gold silk, eyes closed, lit by a single lamp" },
+  { id: "eng-forehead", alt: "An engaged couple touching foreheads, smiling" },
+  { id: "grove-walk", alt: "A couple walking away through a green grove" },
+  { id: "stage-lights", alt: "A performer under a rig of white concert lights" },
+];
+
+export const heroWide = (id: string) => asset(`/img/hero/${id}-w.webp`);
+export const heroTall = (id: string) => asset(`/img/hero/${id}-t.webp`);

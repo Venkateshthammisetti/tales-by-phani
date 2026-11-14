@@ -52,29 +52,60 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-}
-.ph img {
-  width: 100%;
-  height: 118%;
-  object-fit: cover;
-  object-position: 50% 46%;
   will-change: transform;
 }
+
+/* ---------- slideshow ---------- */
+/* Slides cross-fade; the incoming one also eases out of a slight zoom (a slow Ken Burns). */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease);
+}
+.slide.on {
+  opacity: 1;
+  z-index: 1;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 40%;
+}
+:global(html.motion) .slide.on img {
+  animation: drift 9s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes drift {
+  from {
+    transform: scale(1.09);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Readability: a steady darkening plus a deeper pool of shadow under the headline (bottom left),
+   so white text stays clear on every slide, light or dark. */
 .shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 29, 33, 0.55) 0%,
-    rgba(11, 29, 33, 0) 26%,
-    rgba(11, 29, 33, 0.08) 52%,
-    rgba(11, 29, 33, 0.9) 100%
-  );
+  z-index: 2;
+  background:
+    radial-gradient(ellipse 75% 65% at 0% 100%, rgba(6, 15, 18, 0.78) 0%, rgba(6, 15, 18, 0.35) 45%, transparent 75%),
+    linear-gradient(
+      180deg,
+      rgba(11, 29, 33, 0.6) 0%,
+      rgba(11, 29, 33, 0.2) 22%,
+      rgba(11, 29, 33, 0.28) 50%,
+      rgba(11, 29, 33, 0.92) 100%
+    );
 }
 
 /* ---------- copy ---------- */
 .copy {
   position: absolute;
+  z-index: 3;
   left: 0;
   right: 0;
   bottom: 0;
@@ -88,6 +119,89 @@
   font-size: clamp(3.2rem, 10.5vw, 9.6rem);
   line-height: 0.92;
   letter-spacing: -0.025em;
+  text-shadow: 0 2px 40px rgba(6, 15, 18, 0.45);
+}
+
+/* kicker on the left, slide indicators on the right */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.top :global(.kicker) {
+  color: rgba(229, 235, 231, 0.82);
+}
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dots button {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  align-items: center;
+}
+.dots button::before,
+.dots button i {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: rgba(229, 235, 231, 0.3);
+}
+.dots button i {
+  background: var(--fog);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.dots .dotOn i {
+  animation: fill linear forwards;
+}
+@keyframes fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+.dots .pause {
+  width: 32px;
+  height: 32px;
+  margin-left: 6px;
+  place-items: center;
+  border: 1px solid rgba(229, 235, 231, 0.35);
+  border-radius: 50%;
+  color: var(--fog);
+}
+.dots .pause::before {
+  display: none;
+}
+.dots svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+.dots svg path[d^="M8"] {
+  fill: currentColor;
+  stroke: none;
+}
+.num {
+  margin-left: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: rgba(229, 235, 231, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+:global(html.reduce) .dots .dotOn i {
+  animation: none;
+  transform: scaleX(1);
 }
 .mask {
   display: block;
@@ -113,6 +227,7 @@
 
 .scrollcue {
   position: absolute;
+  z-index: 3;
   right: var(--gut);
   top: 50%;
   writing-mode: vertical-rl;
@@ -140,8 +255,8 @@
   .scrollcue {
     display: none;
   }
-  .ph img {
-    margin-top: -22%;
+  .num {
+    display: none;
   }
   .row p {
     display: none;

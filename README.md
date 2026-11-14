@@ -30,19 +30,23 @@ components/
   Lightbox         full-screen photo viewer (keyboard and swipe)
   Cursor           trailing cursor, "View" disc over photos, magnetic buttons
   Nav              header, full-screen mobile menu, mobile sticky bar
-  Hero             preloader intro timeline and parallax
+  Hero             preloader intro, darker photo slideshow (HERO in lib/photos.ts), parallax
   Statement        manifesto that lights up word by word
   Story            pinned horizontal scroll (desktop) / swipe (mobile)
   Work             filterable portfolio grid
   Stage            concerts, layered parallax
   Services         rows with floating hover preview
+  Bridal           bridal portraits spread
+  Testimonials     "Kind words" client quotes (hidden while lib/testimonials.ts is empty)
   Process, Contact, Footer, RevealHeading
   *.module.css     each component's styles
 lib/
   site.ts          WhatsApp number, email, site URL, nav links
   photos.ts        every photo list (story, grid, concerts, services) and image dimensions
+  testimonials.ts  client quotes for the Kind words section
   gsap.ts          GSAP plugin registration and motion helpers
 public/img/        web-sized photos (.webp, 1200-1800px, plus -s 900px versions) and logos
+public/img/hero/   hero slides: <id>-w.webp 2000x1200 (wide screens) and <id>-t.webp 900x1350 (phones)
 source/logo/       original logo file as received
 ```
 
@@ -94,7 +98,7 @@ tick **Enforce HTTPS** (the certificate can take up to an hour). With the Action
 - [x] Photos from the client's "WEB SITE PICS" Drive folder added (bridal, engagement and couple shoots).
       Not used: DSC09491 (Drive would not resize it), near-duplicates, and the Instagram collage layouts.
 - [ ] Replace `public/img/logo-light.png` with the original transparent logo PNG
-- [ ] Add real client testimonials
+- [ ] Add real client testimonials to `lib/testimonials.ts` (the "Kind words" section stays hidden until there is one)
 - [ ] Optional: export a 1200×630 JPG for link previews and point the Open Graph image in `app/layout.tsx` at it
 
 ## Adding photos

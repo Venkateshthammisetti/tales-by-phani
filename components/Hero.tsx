@@ -1,19 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP, prefersMotion } from "@/lib/gsap";
 import { asset } from "@/lib/site";
-import { large, small } from "@/lib/photos";
+import { HERO, heroTall, heroWide } from "@/lib/photos";
 import styles from "./Hero.module.css";
+
+const SLIDE_MS = 6500;
+const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const [loaderDone, setLoaderDone] = useState(false);
+  const [cur, setCur] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [inView, setInView] = useState(true);
+  const [hovered, setHovered] = useState(false);
 
   useGSAP(
     () => {
       if (!prefersMotion()) {
         setLoaderDone(true);
+        setPlaying(false); // reduced motion: no autoplay, visitors can still step through the slides
         return;
       }
       const q = gsap.utils.selector(root);
@@ -29,7 +37,7 @@ export function Hero() {
         .to(q("[data-hero-line]"), { y: 0, duration: 1.4, stagger: 0.12 }, "-=2.05")
         .to(q("[data-hero-fade]"), { opacity: 1, y: 0, duration: 1.1, stagger: 0.12 }, "-=1.1");
 
-      // Scroll: photo drifts slower than the page, copy lifts and fades.
+      // Scroll: photos drift slower than the page, copy lifts and fades.
       gsap.to(q("[data-hero-img]"), {
         yPercent: 12,
         ease: "none",
@@ -45,8 +53,36 @@ export function Hero() {
     { scope: root },
   );
 
+  // Only advance while the hero is on screen and the tab is visible.
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.25 });
+    io.observe(el);
+    const vis = () => setInView(document.visibilityState === "visible" && el.getBoundingClientRect().bottom > 0);
+    document.addEventListener("visibilitychange", vis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", vis);
+    };
+  }, []);
+
+  const running = loaderDone && playing && inView && !hovered;
+  useEffect(() => {
+    if (!running) return;
+    const t = setTimeout(() => setCur((c) => (c + 1) % HERO.length), SLIDE_MS);
+    return () => clearTimeout(t);
+  }, [running, cur]);
+
   return (
-    <section ref={root} className={styles.hero} aria-label="Introduction">
+    <section
+      ref={root}
+      className={styles.hero}
+      aria-label="Introduction"
+      aria-roledescription="carousel"
+      onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+    >
       {!loaderDone && (
         <div className={styles.loader} data-loader aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -57,16 +93,22 @@ export function Hero() {
         </div>
       )}
 
-      <div className={styles.ph}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          data-hero-img
-          src={large("forehead-fog")}
-          srcSet={`${small("forehead-fog")} 900w, ${large("forehead-fog")} 1200w`}
-          sizes="100vw"
-          alt="A couple touching foreheads on a misty hillside"
-          fetchPriority="high"
-        />
+      <div className={styles.ph} data-hero-img>
+        {HERO.map((s, i) =>
+          // The first slide loads straight away; the others wait for the intro so they don't compete with it
+          // (unless a visitor picks one sooner).
+          i === 0 || i === cur || loaderDone ? (
+            <picture
+              key={s.id}
+              className={`${styles.slide} ${i === cur ? styles.on : ""}`}
+              aria-hidden={i !== cur}
+            >
+              <source media="(orientation: landscape)" srcSet={heroWide(s.id)} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={heroTall(s.id)} alt={s.alt} fetchPriority={i === 0 ? "high" : "low"} decoding="async" />
+            </picture>
+          ) : null,
+        )}
       </div>
       <div className={styles.shade} />
       <div className={styles.scrollcue} aria-hidden="true">
@@ -74,9 +116,43 @@ export function Hero() {
       </div>
 
       <div className={styles.copy} data-hero-copy>
-        <p className="kicker" data-hero-fade>
-          Weddings, portraits, emotions
-        </p>
+        <div className={styles.top} data-hero-fade>
+          <p className="kicker">Weddings, portraits, emotions</p>
+          <div className={styles.dots} role="group" aria-label="Hero photos">
+            {HERO.map((s, i) => (
+              <button
+                key={s.id}
+                className={i === cur ? styles.dotOn : undefined}
+                aria-label={`Show photo ${i + 1} of ${HERO.length}`}
+                aria-current={i === cur}
+                onClick={() => setCur(i)}
+              >
+                <i
+                  key={`${i}-${cur}`}
+                  style={{ animationDuration: `${SLIDE_MS}ms`, animationPlayState: running ? "running" : "paused" }}
+                />
+              </button>
+            ))}
+            <button
+              className={styles.pause}
+              aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+              onClick={() => setPlaying((p) => !p)}
+            >
+              {playing ? (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 6v12M15 6v12" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 5.5l11 6.5-11 6.5z" />
+                </svg>
+              )}
+            </button>
+            <span className={styles.num} aria-hidden="true">
+              {pad(cur + 1)} / {pad(HERO.length)}
+            </span>
+          </div>
+        </div>
         <h1 aria-label="Every love has a story.">
           <span className={styles.mask} aria-hidden="true">
             <span data-hero-line>Every love</span>
