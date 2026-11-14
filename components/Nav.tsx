@@ -101,17 +101,10 @@ export function Nav() {
 
       <div className={`${styles.bar} ${bar && !menu ? styles.barOn : ""}`}>
         <a href="#contact">Check your date</a>
-        {whatsAppOn ? (
-          <a href={waLink()} target="_blank" rel="noopener" className={styles.barWa}>
-            <WhatsAppIcon className={styles.waIcon} />
-            WhatsApp
-          </a>
-        ) : (
-          <a href="#work">Portfolio</a>
-        )}
+        <a href="#work">Portfolio</a>
       </div>
 
-      {/* Desktop: a quiet floating chat button once the visitor is past the hero. */}
+      {/* Floating WhatsApp button, icon only, shown once the visitor is past the hero. */}
       {whatsAppOn && (
         <a
           href={waLink()}
@@ -119,10 +112,10 @@ export function Nav() {
           rel="noopener"
           className={`${styles.waFloat} ${bar && !menu ? styles.waFloatOn : ""}`}
           aria-label={`Chat with Phani on WhatsApp, ${PHONE_DISPLAY}`}
+          title="Chat on WhatsApp"
           data-magnetic
         >
           <WhatsAppIcon className={styles.waIcon} />
-          <span>Chat on WhatsApp</span>
         </a>
       )}
     </>
