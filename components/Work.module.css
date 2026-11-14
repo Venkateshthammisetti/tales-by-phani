@@ -19,11 +19,18 @@
 .filters {
   display: flex;
   gap: 0.3rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   border: 1px solid var(--line-l);
   padding: 4px;
   border-radius: 999px;
   position: relative;
+  /* five filters: on narrow screens the bar swipes sideways instead of wrapping under the pill */
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filters::-webkit-scrollbar {
+  display: none;
 }
 .filters button {
   position: relative;
@@ -35,6 +42,8 @@
   color: var(--ink-2);
   transition: color 0.4s;
   min-height: 44px;
+  white-space: nowrap;
+  flex: none;
 }
 .filters button[aria-pressed="true"] {
   color: var(--fog);

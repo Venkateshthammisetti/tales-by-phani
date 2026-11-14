@@ -10,6 +10,8 @@ import styles from "./Work.module.css";
 type Filter = "all" | Kind;
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
+  { id: "bridal", label: "Bridal" },
+  { id: "engagement", label: "Engagements" },
   { id: "couple", label: "Couples" },
   { id: "stage", label: "Concerts" },
 ];

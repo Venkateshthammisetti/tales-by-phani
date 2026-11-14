@@ -91,7 +91,8 @@ tick **Enforce HTTPS** (the certificate can take up to an hour). With the Action
       It powers the enquiry form, the contact links, the floating WhatsApp button and the footer.
 - [ ] Confirm the contact email (`EMAIL` in `lib/site.ts`)
 - [ ] Confirm rights for the "AR / Art of Revealing" watermarked Pavan & Sanjana photos, or swap in clean exports
-- [ ] Add the BRIDE / WEDDING photos as web-size exports (originals were too large to pull)
+- [x] Photos from the client's "WEB SITE PICS" Drive folder added (bridal, engagement and couple shoots).
+      Not used: DSC09491 (Drive would not resize it), near-duplicates, and the Instagram collage layouts.
 - [ ] Replace `public/img/logo-light.png` with the original transparent logo PNG
 - [ ] Add real client testimonials
 - [ ] Optional: export a 1200×630 JPG for link previews and point the Open Graph image in `app/layout.tsx` at it
