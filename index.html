@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tales by Phani</title>
 <meta name="description" content="Tales by Phani Productions: wedding, couple and concert photography from Hyderabad.">
+<meta name="theme-color" content="#0b1d21">
+<!-- SITE_URL: update the three absolute URLs below if the site moves to a custom domain -->
+<link rel="canonical" href="https://venkateshthammisetti.github.io/tales-by-phani/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tales by Phani">
+<meta property="og:title" content="Tales by Phani · Wedding &amp; couple photography, Hyderabad">
+<meta property="og:description" content="Honest moments, quiet glances and the beautiful in-between. Wedding, couple and concert photography from Hyderabad.">
+<meta property="og:url" content="https://venkateshthammisetti.github.io/tales-by-phani/">
+<meta property="og:image" content="https://venkateshthammisetti.github.io/tales-by-phani/img/forehead-fog.webp">
+<meta property="og:image:alt" content="A couple touching foreheads on a misty hillside">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Tales by Phani Productions","description":"Wedding, couple and concert photography from Hyderabad.","url":"https://venkateshthammisetti.github.io/tales-by-phani/","email":"phanifilms3@gmail.com","image":"https://venkateshthammisetti.github.io/tales-by-phani/img/forehead-fog.webp","address":{"@type":"PostalAddress","addressLocality":"Hyderabad","addressRegion":"Telangana","addressCountry":"IN"},"areaServed":"IN"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -42,11 +57,12 @@ h1,h2,h3{font-family:var(--display);font-weight:300;line-height:1.02;letter-spac
 .mask>span{display:block;will-change:transform}
 
 /* ---------- preloader ---------- */
-#loader{position:fixed;inset:0;z-index:200;background:var(--night);display:grid;place-items:center}
+/* hidden unless the motion path runs, so the page is never stuck behind it if JS is off or blocked */
+#loader{position:fixed;inset:0;z-index:200;background:var(--night);display:none;place-items:center}
+html.motion #loader{display:grid}
 #loader .lg{width:min(300px,62vw);clip-path:inset(0 100% 0 0)}
-#loader .bar{position:absolute;left:50%;bottom:18%;width:120px;height:1px;background:var(--line-d);transform:translateX(-50%);overflow:hidden}
-#loader .bar i{position:absolute;inset:0;background:var(--rose);transform:scaleX(0);transform-origin:left}
-html.nojs #loader,html.reduce #loader{display:none}
+#loader .prog{position:absolute;left:50%;bottom:18%;width:120px;height:1px;background:var(--line-d);transform:translateX(-50%);overflow:hidden}
+#loader .prog i{position:absolute;inset:0;background:var(--rose);transform:scaleX(0);transform-origin:left}
 
 /* ---------- cursor ---------- */
 #cursor{position:fixed;left:0;top:0;z-index:150;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--fog);mix-blend-mode:difference;pointer-events:none;display:grid;place-items:center;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease);opacity:0}
@@ -277,7 +293,7 @@ footer .cols a:hover{color:var(--fog)}
 
 <div id="loader" aria-hidden="true">
   <img class="lg" src="img/logo-light.png" alt="">
-  <div class="bar"><i></i></div>
+  <div class="prog"><i></i></div>
 </div>
 <div id="cursor" aria-hidden="true"><span>View</span></div>
 
@@ -335,7 +351,7 @@ footer .cols a:hover{color:var(--fog)}
       <h2>Pavan <em>&amp;</em> Sanjana</h2>
       <p>A monsoon pre-wedding on the hills. Fog rolled in all afternoon, so we stopped fighting it and let it frame them.</p>
     </div>
-    <figure class="t" data-i="forehead-fog"><img src="img/fog-embrace-s.webp" srcset="img/fog-embrace-s.webp 900w, img/fog-embrace.webp 1200w" sizes="(max-width:899px) 72vw, 30vw" alt="Couple embracing on a foggy trail" loading="lazy"><figcaption>In the fog</figcaption></figure>
+    <figure class="t" data-i="fog-embrace"><img src="img/fog-embrace-s.webp" srcset="img/fog-embrace-s.webp 900w, img/fog-embrace.webp 1200w" sizes="(max-width:899px) 72vw, 30vw" alt="Couple embracing on a foggy trail" loading="lazy"><figcaption>In the fog</figcaption></figure>
     <figure class="m" data-i="laugh-fog"><img src="img/laugh-fog-s.webp" srcset="img/laugh-fog-s.webp 900w, img/laugh-fog.webp 1200w" sizes="(max-width:899px) 72vw, 24vw" alt="Bride laughing with her head thrown back" loading="lazy"><figcaption>The laugh</figcaption></figure>
     <figure class="w" data-i="piggyback"><img src="img/piggyback-s.webp" srcset="img/piggyback-s.webp 900w, img/piggyback.webp 1800w" sizes="(max-width:899px) 86vw, 46vw" alt="Bride riding piggyback, both laughing" loading="lazy"><figcaption>Piggyback</figcaption></figure>
     <figure class="u" data-i="hill-run"><img src="img/hill-run-s.webp" srcset="img/hill-run-s.webp 900w, img/hill-run.webp 1200w" sizes="(max-width:899px) 72vw, 22vw" alt="Couple running hand in hand up a hill path" loading="lazy"><figcaption>Up the trail</figcaption></figure>
@@ -511,15 +527,23 @@ requestAnimationFrame(function(){movePill(fbtns[0])});addEventListener('resize',
 /* ---------- mobile menu ---------- */
 var mb=document.getElementById('menuBtn');
 mb.addEventListener('click',function(){var on=document.body.classList.toggle('menu');mb.setAttribute('aria-expanded',on);mb.setAttribute('aria-label',on?'Close menu':'Open menu');if(lenis){on?lenis.stop():lenis.start()}});
-document.querySelectorAll('#sheet a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('menu');mb.setAttribute('aria-expanded','false');if(lenis)lenis.start()})});
+function closeMenu(){document.body.classList.remove('menu');mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Open menu');if(lenis)lenis.start()}
+document.querySelectorAll('#sheet a').forEach(function(a){a.addEventListener('click',closeMenu)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu')){closeMenu();mb.focus()}});
 
 /* ---------- WhatsApp form ---------- */
 var WA='910000000000'; /* replace with Phani's WhatsApp number, country code first, digits only */
+var EMAIL='phanifilms3@gmail.com';
+/* until a real number is set, enquiries go by email so no lead is sent to a dummy number */
+var useWA=/^[1-9]\d{9,14}$/.test(WA)&&!/^910+$/.test(WA);
 var send=document.getElementById('send'),note=document.getElementById('formNote');
+if(!useWA){send.textContent='Send by email';send.removeAttribute('target');document.querySelector('.contact .lead').textContent='Tell us when and where. Your message opens in your email app, ready to send, and Phani replies personally.'}
 function v(id){return document.getElementById(id).value.trim()}
-function build(){var lines=['Hi Phani, I found Tales by Phani online.','Names: '+(v('f-name')||'-'),'Occasion: '+v('f-type'),'Date: '+(v('f-date')||'not fixed yet'),'City/venue: '+(v('f-city')||'-')];if(v('f-phone'))lines.push('Phone: '+v('f-phone'));if(v('f-msg'))lines.push(v('f-msg'));send.href='https://wa.me/'+WA+'?text='+encodeURIComponent(lines.join('\n'))}
-document.getElementById('form').addEventListener('input',build);build();
-send.addEventListener('click',function(e){if(!v('f-name')){e.preventDefault();note.textContent='Add your names so Phani knows who is writing.';document.getElementById('f-name').focus()}else{note.textContent='Opening WhatsApp with your message.'}});
+function build(){var lines=['Hi Phani, I found Tales by Phani online.','Names: '+(v('f-name')||'-'),'Occasion: '+v('f-type'),'Date: '+(v('f-date')||'not fixed yet'),'City/venue: '+(v('f-city')||'-')];if(v('f-phone'))lines.push('Phone: '+v('f-phone'));if(v('f-msg'))lines.push(v('f-msg'));
+  var body=lines.join('\n');
+  send.href=useWA?'https://wa.me/'+WA+'?text='+encodeURIComponent(body):'mailto:'+EMAIL+'?subject='+encodeURIComponent('Enquiry: '+v('f-type')+(v('f-date')?' on '+v('f-date'):''))+'&body='+encodeURIComponent(body)}
+document.getElementById('form').addEventListener('input',build);document.getElementById('form').addEventListener('change',build);build();
+send.addEventListener('click',function(e){if(!v('f-name')){e.preventDefault();note.textContent='Add your names so Phani knows who is writing.';document.getElementById('f-name').focus()}else{note.textContent=useWA?'Opening WhatsApp with your message.':'Opening your email app with your message.'}});
 document.getElementById('form').addEventListener('submit',function(e){e.preventDefault()});
 
 /* ---------- services floating preview ---------- */
@@ -578,7 +602,7 @@ if(typeof Lenis!=='undefined'){
 var tl=gsap.timeline({defaults:{ease:'expo.out'}});
 gsap.set('[data-line]',{yPercent:110});gsap.set('[data-hero]',{opacity:0,y:20});gsap.set('#heroImg',{scale:1.18});
 tl.to('#loader .lg',{clipPath:'inset(0 0% 0 0)',duration:1.1,ease:'power3.inOut'})
-  .to('#loader .bar i',{scaleX:1,duration:1.0,ease:'power2.inOut'},0)
+  .to('#loader .prog i',{scaleX:1,duration:1.0,ease:'power2.inOut'},0)
   .to('#loader',{clipPath:'inset(0 0 100% 0)',duration:1.1,ease:'expo.inOut'},'+=.15')
   .to('#heroImg',{scale:1,duration:2.4,ease:'power3.out'},'-=.75')
   .to('[data-line]',{yPercent:0,duration:1.4,stagger:.12},'-=2.05')

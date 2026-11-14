@@ -18,6 +18,8 @@ Open http://localhost:8000.
 
 ```
 index.html        the whole site (markup, styles, scripts)
+favicon.svg       browser tab icon
+.nojekyll         tells GitHub Pages to serve files as-is
 img/              web-sized photos (.webp, 1200-1800px, plus -s 900px versions) and logos
 source/logo/      original logo file as received
 ```
@@ -27,15 +29,26 @@ source/logo/      original logo file as received
 Hero, manifesto, featured story (horizontal scroll on desktop, swipe on mobile), filterable portfolio with lightbox,
 concerts, services, process, and a WhatsApp enquiry form.
 
+## Deploy on GitHub Pages
+
+1. Push to `main`.
+2. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, branch `main`, folder `/ (root)`.
+3. The site goes live at https://venkateshthammisetti.github.io/tales-by-phani/ in a minute or two.
+
+For a custom domain, add it under Settings → Pages, then replace `https://venkateshthammisetti.github.io/tales-by-phani/`
+in the `<head>` of `index.html` (canonical, Open Graph and JSON-LD tags) with the new address.
+
 ## Before going live
 
-- [ ] Set Phani's WhatsApp number: `var WA='910000000000'` in `index.html` (country code first, digits only)
-- [ ] Confirm the contact email (currently phanifilms3@gmail.com)
+- [ ] Set Phani's WhatsApp number: `var WA='910000000000'` in `index.html` (country code first, digits only).
+      Until it's set, the enquiry form sends by email instead of WhatsApp.
+- [ ] Confirm the contact email (currently phanifilms3@gmail.com, `var EMAIL` in `index.html` and the mailto link)
 - [ ] Confirm rights for the "AR / Art of Revealing" watermarked Pavan & Sanjana photos, or swap in clean exports
 - [ ] Add the BRIDE / WEDDING photos as web-size exports (originals were too large to pull)
 - [ ] Replace `img/logo-light.png` with the original transparent logo PNG
 - [ ] Add real client testimonials
-- [ ] Choose hosting (GitHub Pages, Netlify or Vercel all work as-is) and connect the domain
+- [ ] Turn on GitHub Pages (steps above) or use Netlify/Vercel, and connect the domain
+- [ ] Optional: export a 1200×630 JPG for link previews and point `og:image` at it (WebP previews work on most apps but not all)
 
 ## Adding photos
 
