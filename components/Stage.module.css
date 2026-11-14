@@ -1,0 +1,70 @@
+.stage {
+  background: var(--deep);
+  padding: clamp(80px, 11vw, 150px) 0;
+  position: relative;
+  overflow: hidden;
+}
+.grid {
+  display: grid;
+  gap: clamp(18px, 2.4vw, 32px);
+}
+.text {
+  display: grid;
+  gap: 1.2rem;
+  align-content: start;
+}
+.text h2 {
+  font-size: clamp(2.8rem, 7vw, 6.4rem);
+}
+.text h2 em {
+  color: var(--rose);
+}
+.text > p {
+  color: var(--sage);
+  max-width: 46ch;
+}
+.imgs figure {
+  position: relative;
+  overflow: hidden;
+  background: var(--tide);
+  aspect-ratio: 4/5;
+  cursor: pointer;
+}
+.imgs img {
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: 5fr 4fr 3fr;
+    align-items: end;
+  }
+  .text {
+    grid-column: 1/-1;
+    grid-template-columns: 5fr 7fr;
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+  .imgs {
+    display: contents;
+  }
+  .b {
+    margin-bottom: 12%;
+  }
+  .c {
+    margin-bottom: 28%;
+  }
+}
+@media (max-width: 979px) {
+  .imgs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .a {
+    grid-column: 1/-1;
+  }
+}

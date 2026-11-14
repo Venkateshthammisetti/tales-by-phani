@@ -2,55 +2,78 @@
 
 Portfolio website for **Tales by Phani Productions**, wedding, couple and concert photography from Hyderabad.
 
-A single static page: plain HTML and CSS, with [GSAP](https://gsap.com) + ScrollTrigger and [Lenis](https://github.com/darkroomengineering/lenis) loaded from CDNs. There's no build step.
+Built with [Next.js](https://nextjs.org) (App Router, TypeScript), CSS Modules, [GSAP](https://gsap.com) + ScrollTrigger
+for animation and [Lenis](https://github.com/darkroomengineering/lenis) for smooth scrolling. It exports as a fully
+static site, so it can be hosted anywhere (GitHub Pages, Netlify, Vercel).
 
 ## Run locally
 
 ```bash
-npx serve .
-# or
-python3 -m http.server 8000
+npm install
+npm run dev        # http://localhost:3000 with hot reload
+npm run build      # static export to out/
+npm start          # serve out/ to check the production build
 ```
-
-Open http://localhost:8000.
 
 ## Structure
 
 ```
-index.html        the whole site (markup, styles, scripts)
-favicon.svg       browser tab icon
-.nojekyll         tells GitHub Pages to serve files as-is
-img/              web-sized photos (.webp, 1200-1800px, plus -s 900px versions) and logos
-source/logo/      original logo file as received
+app/
+  layout.tsx       fonts (self-hosted via next/font), SEO metadata, motion opt-in script
+  page.tsx         assembles the sections, JSON-LD
+  globals.css      colour tokens, type, buttons, shared utilities
+  icon.svg         favicon
+components/
+  SmoothScroll     Lenis + GSAP ticker; scroll lock for menu and lightbox
+  Lightbox         full-screen photo viewer (keyboard and swipe)
+  Cursor           trailing cursor, "View" disc over photos, magnetic buttons
+  Nav              header, full-screen mobile menu, mobile sticky bar
+  Hero             preloader intro timeline and parallax
+  Statement        manifesto that lights up word by word
+  Story            pinned horizontal scroll (desktop) / swipe (mobile)
+  Work             filterable portfolio grid
+  Stage            concerts, layered parallax
+  Services         rows with floating hover preview
+  Process, Contact, Footer, RevealHeading
+  *.module.css     each component's styles
+lib/
+  site.ts          WhatsApp number, email, site URL, nav links
+  photos.ts        every photo list (story, grid, concerts, services) and image dimensions
+  gsap.ts          GSAP plugin registration and motion helpers
+public/img/        web-sized photos (.webp, 1200-1800px, plus -s 900px versions) and logos
+source/logo/       original logo file as received
 ```
 
-## Sections
+## Motion and accessibility
 
-Hero, manifesto, featured story (horizontal scroll on desktop, swipe on mobile), filterable portfolio with lightbox,
-concerts, services, process, and a WhatsApp enquiry form.
+- Visitors who set "reduce motion" in their OS get the full site with no intro, parallax or pinning; the story
+  becomes a swipeable row.
+- The preloader has a CSS fail-safe, so the page never gets stuck behind it if scripts fail to load.
+- Custom cursor and hover previews only switch on for a mouse or trackpad.
 
 ## Deploy on GitHub Pages
 
-1. Push to `main`.
-2. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, branch `main`, folder `/ (root)`.
-3. The site goes live at https://venkateshthammisetti.github.io/tales-by-phani/ in a minute or two.
+A workflow in `.github/workflows/deploy.yml` builds and publishes the site on every push to `main`.
 
-For a custom domain, add it under Settings → Pages, then replace `https://venkateshthammisetti.github.io/tales-by-phani/`
-in the `<head>` of `index.html` (canonical, Open Graph and JSON-LD tags) with the new address.
+1. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**
+   (this replaces the old "Deploy from a branch" setting).
+2. Push to `main`. The site goes live at https://venkateshthammisetti.github.io/tales-by-phani/.
+
+For a custom domain: add it under Settings → Pages, remove the `BASE_PATH` env line in the workflow, and update
+`SITE_URL` in `lib/site.ts`.
 
 ## Before going live
 
-- [ ] Set Phani's WhatsApp number: `var WA='910000000000'` in `index.html` (country code first, digits only).
+- [ ] Set Phani's WhatsApp number: `WHATSAPP` in `lib/site.ts` (country code first, digits only).
       Until it's set, the enquiry form sends by email instead of WhatsApp.
-- [ ] Confirm the contact email (currently phanifilms3@gmail.com, `var EMAIL` in `index.html` and the mailto link)
+- [ ] Confirm the contact email (`EMAIL` in `lib/site.ts`)
 - [ ] Confirm rights for the "AR / Art of Revealing" watermarked Pavan & Sanjana photos, or swap in clean exports
 - [ ] Add the BRIDE / WEDDING photos as web-size exports (originals were too large to pull)
-- [ ] Replace `img/logo-light.png` with the original transparent logo PNG
+- [ ] Replace `public/img/logo-light.png` with the original transparent logo PNG
 - [ ] Add real client testimonials
-- [ ] Turn on GitHub Pages (steps above) or use Netlify/Vercel, and connect the domain
-- [ ] Optional: export a 1200×630 JPG for link previews and point `og:image` at it (WebP previews work on most apps but not all)
+- [ ] Optional: export a 1200×630 JPG for link previews and point the Open Graph image in `app/layout.tsx` at it
 
 ## Adding photos
 
-Export at 1800px on the long edge as WebP (quality ~80), plus a 900px `-s` version. Then add an entry to the `DIM` and `GRID`
-lists near the top of the `<script>` in `index.html`.
+Export at 1800px on the long edge as WebP (quality ~80), plus a 900px `-s` version, into `public/img/`.
+Add the photo's dimensions to `DIM` in `lib/photos.ts`, then add it to `GRID` (portfolio), `STORY` or `STAGE`.

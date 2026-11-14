@@ -1,0 +1,194 @@
+/* Layout idea: night-and-mist rhythm. Deep petrol sections (from the client's own reference) alternate with
+   cool fog sections (from the misty hill shoots). Photographs run large; type is thin and quiet like the logo. */
+:root {
+  --night: #0b1d21; /* deep petrol, page base */
+  --deep: #060f12; /* concert section */
+  --tide: #14313a; /* raised petrol */
+  --fog: #e5ebe7; /* cool mist surface */
+  --fog-2: #cfd8d3; /* image placeholder on fog */
+  --ink: #122224; /* text on fog */
+  --ink-2: #3f524e; /* secondary text on fog */
+  --ink-3: #5b6d68; /* kicker on fog */
+  --rose: #c9a27f; /* rose-gold accent, from the watches in the shoot */
+  --sage: #8fa29a; /* muted secondary text on night */
+  --line-d: rgba(229, 235, 231, 0.16);
+  --line-l: rgba(18, 34, 36, 0.16);
+  --display: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --body: var(--font-body), "Futura", "Avenir Next", system-ui, sans-serif;
+  --gut: clamp(18px, 5vw, 72px);
+  --ease: cubic-bezier(0.22, 0.8, 0.12, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  background: var(--night);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+body {
+  background: var(--night);
+  color: var(--fog);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 1.5px solid var(--rose);
+  outline-offset: 4px;
+}
+::selection {
+  background: var(--rose);
+  color: var(--night);
+}
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h1 em,
+h2 em,
+h3 em {
+  font-style: italic;
+}
+
+/* ---------- shared utilities ---------- */
+.wrap {
+  padding-inline: var(--gut);
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--sage);
+  font-weight: 400;
+}
+.on-fog .kicker {
+  color: var(--ink-3);
+}
+.skip {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  z-index: 300;
+  padding: 0.8rem 1.2rem;
+  background: var(--fog);
+  color: var(--night);
+  transform: translateY(-200%);
+}
+.skip:focus {
+  transform: none;
+}
+
+/* ---------- buttons ---------- */
+.btns {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.6rem;
+  border: 1px solid rgba(229, 235, 231, 0.5);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.45s var(--ease), border-color 0.45s, transform 0.35s var(--ease);
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fog);
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
+}
+.btn:hover {
+  color: var(--night);
+  border-color: var(--fog);
+}
+.btn:hover::before {
+  transform: none;
+}
+.btn.fill {
+  background: var(--fog);
+  color: var(--night);
+  border-color: var(--fog);
+}
+.btn.fill::before {
+  background: var(--rose);
+}
+
+/* ---------- motion: initial states, only when JS has opted into motion ---------- */
+/* The class is set by an inline script in <head> before first paint, so nothing flashes. */
+html.motion [data-hero-line] {
+  transform: translateY(110%);
+}
+html.motion [data-hero-fade] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.reveal {
+  clip-path: inset(0 0 0 0);
+}
+html.motion .reveal {
+  clip-path: inset(12% 0 0 0);
+}
+html.motion .reveal.in {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.3s var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

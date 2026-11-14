@@ -1,0 +1,41 @@
+.statement {
+  background: var(--fog);
+  color: var(--ink);
+  padding: clamp(80px, 13vw, 180px) 0 clamp(70px, 10vw, 140px);
+}
+.grid {
+  display: grid;
+  gap: 2.4rem;
+}
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr 3.2fr;
+    gap: 4rem;
+  }
+}
+.big {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4.3vw, 3.7rem);
+  line-height: 1.14;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+/* Dim words before the scroll animation takes over, so there's no flash of full-contrast text. */
+:global(html.motion) .big [data-w] {
+  opacity: 0.28;
+}
+.meta {
+  margin-top: 2.6rem;
+  display: flex;
+  gap: 2.4rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.meta b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--ink);
+}

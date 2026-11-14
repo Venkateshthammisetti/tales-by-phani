@@ -1,0 +1,28 @@
+.footer {
+  background: var(--night);
+  padding: clamp(60px, 8vw, 110px) var(--gut) calc(30px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line-d);
+}
+.big {
+  width: min(560px, 80vw);
+  margin-bottom: 3rem;
+}
+.cols {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+  color: var(--sage);
+}
+.cols a {
+  transition: color 0.3s;
+}
+.cols a:hover {
+  color: var(--fog);
+}
+@media (max-width: 860px) {
+  .footer {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
