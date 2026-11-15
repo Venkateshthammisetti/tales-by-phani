@@ -61,7 +61,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.6s var(--ease);
+  transition: opacity 1.1s var(--ease);
 }
 .slide.on {
   opacity: 1;
@@ -74,7 +74,7 @@
   object-position: 62% 40%;
 }
 :global(html.motion) .slide.on img {
-  animation: drift 9s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  animation: drift 5.5s cubic-bezier(0.2, 0.6, 0.2, 1) both;
 }
 @keyframes drift {
   from {

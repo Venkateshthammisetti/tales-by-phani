@@ -6,7 +6,7 @@ import { asset } from "@/lib/site";
 import { HERO, heroTall, heroWide } from "@/lib/photos";
 import styles from "./Hero.module.css";
 
-const SLIDE_MS = 6500;
+const SLIDE_MS = 4000; // time each photo stays up; the cross-fade in Hero.module.css is 1.1s
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Hero() {
@@ -15,7 +15,6 @@ export function Hero() {
   const [cur, setCur] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [inView, setInView] = useState(true);
-  const [hovered, setHovered] = useState(false);
 
   useGSAP(
     () => {
@@ -67,7 +66,8 @@ export function Hero() {
     };
   }, []);
 
-  const running = loaderDone && playing && inView && !hovered;
+  // No pause on hover: the hero fills the screen, so a resting mouse would stop it for good.
+  const running = loaderDone && playing && inView;
   useEffect(() => {
     if (!running) return;
     const t = setTimeout(() => setCur((c) => (c + 1) % HERO.length), SLIDE_MS);
@@ -80,8 +80,6 @@ export function Hero() {
       className={styles.hero}
       aria-label="Introduction"
       aria-roledescription="carousel"
-      onPointerEnter={(e) => e.pointerType === "mouse" && setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
     >
       {!loaderDone && (
         <div className={styles.loader} data-loader aria-hidden="true">
