@@ -6,7 +6,7 @@ import { asset } from "@/lib/site";
 import { HERO, heroTall, heroWide } from "@/lib/photos";
 import styles from "./Hero.module.css";
 
-const SLIDE_MS = 4000; // time each photo stays up; the cross-fade in Hero.module.css is 1.1s
+const SLIDE_MS = 3000; // time each photo stays up; the cross-fade in Hero.module.css is 0.9s
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Hero() {
