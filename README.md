@@ -63,8 +63,8 @@ A workflow in `.github/workflows/deploy.yml` builds and publishes the site on ev
 
 1. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**
    (this replaces the old "Deploy from a branch" setting).
-2. Push to `main`. The site is built for the root of www.talesbyphani.in. (Before the domain was connected it lived at
-   https://venkateshthammisetti.github.io/tales-by-phani/ `/tales-by-phani/` on github.io via `BASE_PATH`; that no longer works.)
+2. Push to `main`. The site is built for the root of www.talesbyphani.in, so the old github.io/tales-by-phani/ address
+   no longer renders correctly.
 
 ### Custom domain (www.talesbyphani.in, registered at GoDaddy)
 
