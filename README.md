@@ -63,13 +63,13 @@ A workflow in `.github/workflows/deploy.yml` builds and publishes the site on ev
 
 1. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**
    (this replaces the old "Deploy from a branch" setting).
-2. Push to `main`. Until the custom domain is connected, the site is at
-   https://venkateshthammisetti.github.io/tales-by-phani/ (the workflow sets `BASE_PATH=/tales-by-phani` for this).
+2. Push to `main`. The site is built for the root of www.talesbyphani.in. (Before the domain was connected it lived at
+   https://venkateshthammisetti.github.io/tales-by-phani/ `/tales-by-phani/` on github.io via `BASE_PATH`; that no longer works.)
 
 ### Custom domain (www.talesbyphani.in, registered at GoDaddy)
 
-`SITE_URL` in `lib/site.ts` already points at the domain. When the domain is connected, delete the two `env` /
-`BASE_PATH` lines in `.github/workflows/deploy.yml` so the site is built for the root of the domain.
+`SITE_URL` in `lib/site.ts` points at the domain, and the workflow no longer sets `BASE_PATH`, so the site is built for
+the root of the domain.
 
 .IN domains need KYC verification at GoDaddy before DNS changes are allowed (the yellow "Validate" banner).
 

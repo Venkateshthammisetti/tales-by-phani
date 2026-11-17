@@ -24,12 +24,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # TEMPORARY: until www.talesbyphani.in is connected, the site is served from
-      # https://<user>.github.io/<repo>/, so assets need the /<repo> prefix.
-      # Once the custom domain is set in Settings → Pages, delete the two `env` lines below.
       - run: npm run build
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
